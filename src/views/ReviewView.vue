@@ -1,14 +1,23 @@
-
+<!-- SEARCH FOR AND FILTER LIST -->
 
 <template>
   <div>
-    <p>poop</p>
+    <h1>Search for a Gruntr</h1>
     <h3>Search</h3>
-    <p>Message is: {{ message }}</p>
-<input v-model="message" placeholder="edit me" />
-    <!-- <p v-if="search.length <= 8">Password: must be 8 characters</p>
-    <p v-else>Password: {{ search }}</p> --> -->
-    <h1>This is a reviews page</h1>
+    <!-- User input to search public toilets -->
+    <input v-model="search" placeholder="find a gruntr" />
+    <p>Search results: {{ search }}</p>
+
+    <div v-for="toilet in filteredToilets" v-bind:key="toilet.Name">
+      <p>{{ toilet.Name }} </p>
+    </div>
+
+    <!-- <ul>
+      <li v-for="toilet in toilets" v-bind:key="toilet.FacilityID">
+        {{ toilet.Name }}
+      </li>
+    </ul> -->
+    <p>display search result here:</p>
   </div>
 </template>
 
@@ -23,20 +32,26 @@
 </style>
 
 <script>
-  import rawToilets from "../assets/data/toiletsTas.json";
-  import { defineComponent } from "vue";
-  export default defineComponent({
-    data() {
-      return {
-        toilets: rawToilets,
-      };
-    },
-    data() {
-    return {
-      message: ''
-    }
-  }
-  })
+import rawToilets from "../assets/data/toiletsTas.json";
+import { defineComponent } from "vue";
+export default defineComponent({
+  data() {
 
-  </script>
+
+    return {
+      toilets: rawToilets,
+      search: "",
+    };
+  
+  },
+
+  computed: {
+    filteredToilets() {
+      return this.toilets.filter(toilet => {
+         return toilet.Name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+      })
+    }
+  },
+});
+</script>
   
