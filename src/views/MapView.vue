@@ -12,9 +12,13 @@
           v-bind:key="pos.id"
           v-bind:options="pos"
         >
-        <InfoWindow>
-            {{pos.title}}
-        </InfoWindow>
+          <InfoWindow style="color: black">
+            <ul>
+              <li>{{ pos.title }}</li>
+              <li>{{ pos.address }}</li>
+              <li>{{ pos.town }}</li>
+            </ul>
+          </InfoWindow>
         </Marker>
       </MarkerCluster>
     </GoogleMap>
@@ -26,7 +30,7 @@
   </div>
 </template>
   
-  <script>
+<script>
 import { defineComponent } from "vue";
 import { GoogleMap, Marker, MarkerCluster, InfoWindow } from "vue3-google-map";
 //   import all toilt data from file
@@ -45,6 +49,8 @@ export default defineComponent({
       label: t.Name.charAt(0),
       id: t.FacilityID,
       title: t.Name,
+      address: t.Address1,
+      town: t.Town,
     }));
 
     const center = { lat: -41.93, lng: 147.49 };
