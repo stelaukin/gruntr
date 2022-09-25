@@ -1,9 +1,17 @@
 <!-- MAPS API KEY -->
-<!-- AIzaSyAuDdI55xkd_BCgEmjCz-xkFzrPOIqBjHQ --> 
+<!-- *************************************** --> 
 
 
 <template>
   <div>
+    <div>
+      <Transition name="bounce">
+        <h3 v-if="true" style="text-align: center">
+          Move the map and click on a toilet location to find out more
+          information
+        </h3>
+      </Transition>
+    </div>
     <GoogleMap style="width: 100%; height: 100vh" :center="center" :zoom="7">
       <!-- <Marker :options="{ position: center }" /> -->
       <MarkerCluster>

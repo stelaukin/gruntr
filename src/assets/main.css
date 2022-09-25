@@ -7,11 +7,18 @@
   font-weight: normal;
 }
 
+
+
+
 a,
 .green {
   text-decoration: none;
   color: rgb(114, 134, 82);
   transition: 0.4s;
+}
+
+.box {
+  border: 1px solid green;
 }
 
 @media (hover: hover) {
@@ -28,7 +35,7 @@ a,
 
   #app {
     display: grid;
-    grid-template-columns: 20% 1fr;
+    grid-template-columns: 10% 1fr;
     padding-left: 2rem;
   }
 }

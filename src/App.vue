@@ -5,16 +5,17 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="gruntrLogo" class="logo" src="./assets/gruntrLogo.png" width="120" height="120" />
+    
 
     <div class="wrapper">
+      <img alt="gruntrLogo" class="logo" src="./assets/gruntrLogo.png" width="120" height="120" />
       <HelloWorld msg="gruntr" />
 
       <nav>
         <RouterLink to="/">Welcome</RouterLink>
         <RouterLink to="/map">Map</RouterLink>
         <RouterLink to="/review">Reviews</RouterLink>
-        <RouterLink to="/about">Account</RouterLink>
+        <RouterLink to="/account">Account</RouterLink>
       </nav>
     </div>
   </header>
