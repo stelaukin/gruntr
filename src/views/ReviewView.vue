@@ -11,13 +11,13 @@
 
     <!-- Will filter list of toilets based on user search -->
     <div v-for="toilet in filteredToilets" v-bind:key="toilet.Name">
-
       <!-- Displays search results including toilet name, address and a button to leave a review !not working -->
-      <p >
-        {{ toilet.Name }} | {{ toilet.Address1 }} <button @click="warnDisabled">Leave Review</button>
-        <span v-if="disabled">  Sorry, this feature is under development!</span>
+      <p class="reviewList">
+        {{ toilet.Name }} | {{ toilet.Address1 }}
+        <button @click="warnDisabled">Leave Review</button>
+        <span v-if="disabled"> Sorry, this feature is under development!</span>
       </p>
-
+      <br>
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@
 <!-- don't write to Json file, simplest way local storage (cookie) mdn webdoc, -->
 
 <style>
+/* Animations for warning on button click - 'in development' */
 @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
@@ -60,35 +61,60 @@
   }
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.reviewList {
+  padding: 5px;
+  background-color: #804815;
+  border: 1px;
+  border-style: solid;
+  width: fit-content;
+  border-color: rgb(155, 64, 4);
+  font-size: 20px;
+  text-align: center;
+  color: rgb(228, 206, 186);
+
+}
 </style>
 
 <script>
-  import rawToilets from "../assets/data/toiletsTas.json";
-  import { defineComponent, ref } from "vue";
-  export default defineComponent({
-    data() {
-      return {
-        toilets: rawToilets,
-        search: "",
-        disabled: false,
-        toSearch: "Please Enter the Name of a Public Toilet"
-      };
-    
-    },
-    methods: {
-    warnDisabled() {
-      this.disabled = true
-      setTimeout(() => {
-        this.disabled = false
-      }, 1500)
-    }
+// import toilet data
+import rawToilets from "../assets/data/toiletsTas.json";
+import { defineComponent, ref } from "vue";
+export default defineComponent({
+  data() {
+    return {
+      toilets: rawToilets,
+      search: "",
+      disabled: false,
+      toSearch: "Please Enter the Name of a Public Toilet",
+      show: true,
+    };
   },
-    computed: {
-      filteredToilets() {
-        return this.toilets.filter(toilet => {
-           return toilet.Name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
-        })
-      }
+  // displays warning when trying to leave review
+  methods: {
+    warnDisabled() {
+      this.disabled = true;
+      setTimeout(() => {
+        this.disabled = false;
+      }, 1500);
     },
-  });
-  </script>
+  },
+  // returns toilet list - matches with search
+  computed: {
+    filteredToilets() {
+      return this.toilets.filter((toilet) => {
+        return (
+          toilet.Name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+        );
+      });
+    },
+  },
+});
+</script>

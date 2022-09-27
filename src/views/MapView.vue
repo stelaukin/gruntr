@@ -1,19 +1,20 @@
 <!-- MAPS API KEY -->
 <!-- *************************************** --> 
 
-
+<!-- MAP implentation using vue3-google-map -->
 <template>
   <div>
+
     <div>
-      <Transition name="bounce">
-        <h3 v-if="true" style="text-align: center">
-          Move the map and click on a toilet location to find out more
-          information
-        </h3>
-      </Transition>
+
+      <h3 v-if="show">
+        Move the map and click on a toilet location to find out more information.
+      </h3>
+
     </div>
-    <GoogleMap style="width: 100%; height: 100vh" :center="center" :zoom="7">
-      <!-- <Marker :options="{ position: center }" /> -->
+
+
+    <GoogleMap style="width: 100%; height: 100vh" :center="center" :zoom="10">
       <MarkerCluster>
         <Marker
           v-for="pos in markerPos"
@@ -25,6 +26,9 @@
               <li>{{ pos.title }}</li>
               <li>{{ pos.address }}</li>
               <li>{{ pos.town }}</li>
+              <li>Accessible: {{ pos.accessible }}</li>
+              <li>Baby Change: {{ pos.baby }}</li>
+              <li>{{ pos.open }}</li>
             </ul>
           </InfoWindow>
         </Marker>
@@ -37,6 +41,8 @@
     </ul>
   </div>
 </template>
+
+
   
 <script>
 import { defineComponent } from "vue";
@@ -47,6 +53,7 @@ export default defineComponent({
   data() {
     return {
       toilets: rawToilets,
+      show: true
     };
   },
   components: { GoogleMap, Marker, MarkerCluster, InfoWindow },
@@ -59,6 +66,9 @@ export default defineComponent({
       title: t.Name,
       address: t.Address1,
       town: t.Town,
+      accessible: t.Accessible,
+      baby: t.BabyChange,
+      open: t.OpeningHours,
     }));
 
     const center = { lat: -41.93, lng: 147.49 };
