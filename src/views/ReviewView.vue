@@ -6,18 +6,13 @@
     <h3>Search</h3>
 
     <!-- User input to search public toilets -->
-    <input v-model="search" style="font-size: larger;" placeholder="find a gruntr" />
+    <input v-model="input" style="font-size: larger;" placeholder="find a gruntr" />
     <p>Search results: {{ search }}</p>
 
     <!-- Will filter list of toilets based on user search -->
-    <div v-for="toilet in filteredToilets" v-bind:key="toilet.Name">
+    <div v-for="toilet in filteredToilets" v-bind:key="toilet.FacilityID">
       <!-- Displays search results including toilet name, address and a button to leave a review !not working -->
-      <p class="reviewList">
-        Toilet Name: {{ toilet.Name }}
-        <br>Address: {{ toilet.Address1 }}
-        <br><button @click="warnDisabled">Leave Review</button>
-        <span v-if="disabled"> Sorry, this feature is under development!</span>
-      </p>
+      <ToiletListItem :name="toilet.Name" :address="toilet.Address1" />
       <br>
     </div>
   </div>
@@ -70,53 +65,53 @@
   opacity: 0;
 }
 
-.reviewList {
-  padding: 5px;
-  background-color: #804815;
-  border: 1px;
-  border-style: solid;
-  width: 60%;
-  border-color: rgb(155, 64, 4);
-  font-size: 20px;
-  text-align: center;
-  color: rgb(228, 206, 186);
-  border-radius: 25px;
-  box-shadow: 5px 5px rgba(19, 75, 17, 0.74);
-}
+
 </style>
 
 <script>
 // import toilet data
 import rawToilets from "../assets/data/toiletsTas.json";
 import { defineComponent, ref } from "vue";
+import ToiletListItem from "../components/ToiletListItem.vue";
 export default defineComponent({
   data() {
     return {
       toilets: rawToilets,
       search: "",
-      disabled: false,
+
       toSearch: "Please Enter the Name of a Public Toilet",
       show: true,
+      input: "",
+      filteredToilets: rawToilets,
     };
+
   },
+  components: { ToiletListItem },
   // displays warning when trying to leave review
-  methods: {
-    warnDisabled() {
-      this.disabled = true;
-      setTimeout(() => {
-        this.disabled = false;
-      }, 1500);
-    },
-  },
-  // returns toilet list - matches with search
-  computed: {
-    filteredToilets() {
-      return this.toilets.filter((toilet) => {
+
+  watch: {
+    input: function(newInput, oldInput) {
+      if (newInput == "") {
+        this.filteredToilets = this.toilets
+        return
+      }
+      this.filteredToilets = this.toilets.filter((toilet) => {
         return (
-          toilet.Name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+          toilet.Name.toLowerCase().indexOf(newInput.toLowerCase()) > -1 || toilet.Town.toLowerCase().indexOf(newInput.toLowerCase()) > -1 || toilet.Address1.toLowerCase().indexOf(newInput.toLowerCase()) > -1
         );
       });
-    },
+      console.log(newInput + oldInput)
+    }
   },
+  // returns toilet list - matches with search
+  // computed: {
+  //   filteredToilets() {
+  //     return this.toilets.filter((toilet) => {
+  //       return (
+  //         toilet.Name.toLowerCase().indexOf(this.search.toLowerCase()) > -1
+  //       );
+  //     });
+  //   },
+  // },
 });
 </script>
