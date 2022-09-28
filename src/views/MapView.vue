@@ -34,11 +34,11 @@
         </Marker>
       </MarkerCluster>
     </GoogleMap>
-    <ul>
+    <!-- <ul>
       <li v-for="toilet in toilets" v-bind:key="toilet.FacilityID">
         {{ toilet.Name }}
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 

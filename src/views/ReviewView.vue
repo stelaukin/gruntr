@@ -6,15 +6,16 @@
     <h3>Search</h3>
 
     <!-- User input to search public toilets -->
-    <input v-model="search" placeholder="find a gruntr" />
+    <input v-model="search" style="font-size: larger;" placeholder="find a gruntr" />
     <p>Search results: {{ search }}</p>
 
     <!-- Will filter list of toilets based on user search -->
     <div v-for="toilet in filteredToilets" v-bind:key="toilet.Name">
       <!-- Displays search results including toilet name, address and a button to leave a review !not working -->
       <p class="reviewList">
-        {{ toilet.Name }} | {{ toilet.Address1 }}
-        <button @click="warnDisabled">Leave Review</button>
+        Toilet Name: {{ toilet.Name }}
+        <br>Address: {{ toilet.Address1 }}
+        <br><button @click="warnDisabled">Leave Review</button>
         <span v-if="disabled"> Sorry, this feature is under development!</span>
       </p>
       <br>
@@ -74,12 +75,13 @@
   background-color: #804815;
   border: 1px;
   border-style: solid;
-  width: fit-content;
+  width: 60%;
   border-color: rgb(155, 64, 4);
   font-size: 20px;
   text-align: center;
   color: rgb(228, 206, 186);
-
+  border-radius: 25px;
+  box-shadow: 5px 5px rgba(19, 75, 17, 0.74);
 }
 </style>
 
