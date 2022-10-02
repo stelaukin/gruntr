@@ -1,11 +1,10 @@
 <template>
   <!-- Displays search results including toilet name, address and a button to leave a review !not working -->
   <p class="reviewList">
-    Toilet Name: {{ name }} <br />Address: {{ address }} <br /><button
-      @click="warnDisabled"
-    >
-      Leave Review
-    </button>
+    Toilet Name: {{ name }} <br />
+    Address: {{ address }} <br />
+    Town: {{ town }} <br />
+    <button @click="warnDisabled">Leave Review</button>
     <span v-if="disabled"> Sorry, this feature is under development!</span>
   </p>
 </template>
@@ -15,6 +14,7 @@ export default {
   props: {
     name: String,
     address: String,
+    town: String,
   },
   data() {
     return {

@@ -33,8 +33,13 @@ import SupportIcon from "./icons/IconSupport.vue";
     </template>
     <template #heading>Give A Crap</template>
 
-    Gruntr is partnering with Who Give's a Crap?  <a href="https://au.whogivesacrap.org/pages/about-us" target="_blank" rel="noopener"
-      >Find out mroe here.</a>.
+    Gruntr is partnering with Who Give's a Crap?
+    <a
+      href="https://au.whogivesacrap.org/pages/about-us"
+      target="_blank"
+      rel="noopener"
+      >Find out more here.</a
+    >.
   </WelcomeItem>
 
   <WelcomeItem>
@@ -53,7 +58,7 @@ import SupportIcon from "./icons/IconSupport.vue";
     <template #icon>
       <SupportIcon />
     </template>
-    <template #heading>Austrlaian Public Toilets</template>
+    <template #heading>Australian Public Toilets</template>
 
     If our website is not working please use the
     <a href="https://toiletmap.gov.au/" target="_blank" rel="noopener"

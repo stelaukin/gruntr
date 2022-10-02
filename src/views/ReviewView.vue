@@ -6,14 +6,18 @@
     <h3>Search</h3>
 
     <!-- User input to search public toilets -->
-    <input v-model="input" style="font-size: larger;" placeholder="find a gruntr" />
+    <input
+      v-model="input"
+      style="font-size: larger"
+      placeholder="find a gruntr"
+    />
     <p>Search results: {{ search }}</p>
 
     <!-- Will filter list of toilets based on user search -->
     <div v-for="toilet in filteredToilets" v-bind:key="toilet.FacilityID">
-      <!-- Displays search results including toilet name, address and a button to leave a review !not working -->
-      <ToiletListItem :name="toilet.Name" :address="toilet.Address1" />
-      <br>
+      <!-- Displays search results including toilet name, address and a button to leave a review (not working) -->
+      <ToiletListItem :name="toilet.Name" :address="toilet.Address1" :town="toilet.Town"/>
+      <br />
     </div>
   </div>
 </template>
@@ -21,7 +25,7 @@
 <!-- don't write to Json file, simplest way local storage (cookie) mdn webdoc, -->
 
 <style>
-/* Animations for warning on button click - 'in development' */
+/* Animations for review on button click - 'in development' */
 @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
@@ -64,18 +68,20 @@
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
-
-
 </style>
 
 <script>
 // import toilet data
 import rawToilets from "../assets/data/toiletsTas.json";
 import { defineComponent, ref } from "vue";
+// import prop for displaying toilets that are searched
 import ToiletListItem from "../components/ToiletListItem.vue";
+
+
 export default defineComponent({
   data() {
     return {
+      // toilet data from json file
       toilets: rawToilets,
       search: "",
 
@@ -84,25 +90,30 @@ export default defineComponent({
       input: "",
       filteredToilets: rawToilets,
     };
-
   },
+  // Prop for displaying toilets in search
   components: { ToiletListItem },
-  // displays warning when trying to leave review
 
+
+  // Watcher to update list of toilets based on search input
   watch: {
-    input: function(newInput, oldInput) {
+    input: function (newInput, oldInput) {
       if (newInput == "") {
-        this.filteredToilets = this.toilets
-        return
+        this.filteredToilets = this.toilets;
+        return;
       }
       this.filteredToilets = this.toilets.filter((toilet) => {
         return (
-          toilet.Name.toLowerCase().indexOf(newInput.toLowerCase()) > -1 || toilet.Town.toLowerCase().indexOf(newInput.toLowerCase()) > -1 || toilet.Address1.toLowerCase().indexOf(newInput.toLowerCase()) > -1
+          toilet.Name.toLowerCase().indexOf(newInput.toLowerCase()) > -1 ||
+          toilet.Town.toLowerCase().indexOf(newInput.toLowerCase()) > -1 ||
+          toilet.Address1.toLowerCase().indexOf(newInput.toLowerCase()) > -1
         );
       });
-      console.log(newInput + oldInput)
-    }
+      console.log(newInput + oldInput);
+    },
   },
+
+
   // returns toilet list - matches with search
   // computed: {
   //   filteredToilets() {
